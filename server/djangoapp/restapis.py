@@ -28,12 +28,34 @@ def get_request(endpoint, **kwargs):
         # If any error occurs
         print("Network exception occurred")
 
-# def get_request(endpoint, **kwargs):
-# Add code for get requests to back end
 
-# def analyze_review_sentiments(text):
-# request_url = sentiment_analyzer_url+"analyze/"+text
-# Add code for retrieving sentiments
+#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+def get_dealerships(request, state="All"):
+    if(state == "All"):
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/"+state
+    dealerships = get_request(endpoint)
+    return JsonResponse({"status":200,"dealers":dealerships})
 
-# def post_review(data_dict):
-# Add code for posting review
+
+
+def post_review(data_dict):
+    request_url = backend_url+"/insert_review"
+    try:
+        response = requests.post(request_url,json=data_dict)
+        print(response.json())
+        return response.json()
+    except:
+        print("Network exception occurred")
+
+def add_review(request):
+    if(request.user.is_anonymous == False):
+        data = json.loads(request.body)
+        try:
+            response = post_review(data)
+            return JsonResponse({"status":200})
+        except:
+            return JsonResponse({"status":401,"message":"Error in posting review"})
+    else:
+        return JsonResponse({"status":403,"message":"Unauthorized"})
