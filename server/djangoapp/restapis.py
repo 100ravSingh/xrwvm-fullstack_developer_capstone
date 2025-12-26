@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', default="https://didactic-lamp-q4vjwgjpgrjh456g-3030.app.github.dev")
+    'backend_url', default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
     default="https://sentianalyzer.24c21jy4pklt.us-south.codeengine.appdomain.cloud")
