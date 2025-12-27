@@ -3,6 +3,7 @@ from django.http import JsonResponse
 import requests
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -11,7 +12,7 @@ backend_url = os.getenv(
     default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
-    default=
+    default= 
     "https://sentianalyzer.24c21jy4pklt.us-south.codeengine.appdomain.cloud")
 
 
@@ -46,25 +47,18 @@ def get_dealerships(request, state="All"):
     return JsonResponse({"status": 200, "dealers": dealerships})
 
 
-def post_review(data_dict):
-    request_url = backend_url+"/insert_review"
-    try:
-        response = requests.post(request_url, json=data_dict)
-        print(response.json())
-        return response.json()
-    except Exception as e:
-        print(f"Network exception occurred: {e}")
-
-
 def add_review(request):
     if (request.user.is_anonymous is False):
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
-        except:
-            return JsonResponse({"status": 401,
-             "message": "Error in posting review"})
+        except Exception as e:
+            print(f"error is : {e}")
+            return JsonResponse({
+                "status": 401,
+                "message": "Error in posting review"
+                })
     else:
         return JsonResponse({"status": 403,
          "message": "Unauthorized"})
@@ -86,6 +80,7 @@ def analyze_review_sentiments(text):
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
         return None
+
 
 def post_review(data_dict):
     request_url = backend_url+"/insert_review"
