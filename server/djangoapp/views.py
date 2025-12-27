@@ -1,7 +1,7 @@
 # Uncomment the required imports before adding the code
 from .restapis import get_request, analyze_review_sentiments, post_review
 from .models import CarMake, CarModel
-from django.shortcuts import render
+# from django.shortcuts import render
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 # from django.shortcuts import get_object_or_404, render, redirect
@@ -94,7 +94,7 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name,
-         "CarMake": car_model.car_make.name})
+        "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
@@ -120,8 +120,9 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
-#Update the `get_dealerships` render list of dealerships all by default,
+# Update the `get_dealerships` render list of dealerships all by default,
 # particular state if state is passed
+
 def get_dealerships(request, state="All"):
     if (state == "All"):
         endpoint = "/fetchDealers"
@@ -129,6 +130,7 @@ def get_dealerships(request, state="All"):
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)
     return JsonResponse({"status": 200, "dealers": dealerships})
+
 
 def get_dealer_details(request, dealer_id):
     if (dealer_id):
