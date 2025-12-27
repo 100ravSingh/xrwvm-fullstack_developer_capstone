@@ -1,4 +1,3 @@
-```md
 # 🚗 Dealership Full-Stack Application
 
 A full-stack web application built using **Django, React, MongoDB, Kubernetes, and IBM Cloud**, featuring dealer listings, reviews, sentiment analysis, authentication, and CI/CD automation.
@@ -237,6 +236,3 @@ http://localhost:8000
 ```
 
 ---
-
-Just tell me.
-```
