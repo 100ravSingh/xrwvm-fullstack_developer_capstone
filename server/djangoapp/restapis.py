@@ -11,8 +11,8 @@ backend_url = os.getenv(
     'backend_url',
     default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
 sentiment_analyzer_url = os.getenv(
-    'sentiment_analyzer_url',
-    default= 
+    'sentiment_analyzer_url', 
+    default=
     "https://sentianalyzer.24c21jy4pklt.us-south.codeengine.appdomain.cloud")
 
 
@@ -60,8 +60,10 @@ def add_review(request):
                 "message": "Error in posting review"
                 })
     else:
-        return JsonResponse({"status": 403,
-         "message": "Unauthorized"})
+        return JsonResponse({
+            "status": 403,
+            "message": "Unauthorized"
+            })
 
 
 def analyze_review_sentiments(text):
@@ -85,8 +87,8 @@ def analyze_review_sentiments(text):
 def post_review(data_dict):
     request_url = backend_url+"/insert_review"
     try:
-        response = requests.post(request_url,json=data_dict)
+        response = requests.post(request_url, json=data_dict)
         print(response.json())
         return response.json()
-    except:
-        print("Network exception occurred")
+    except Exception as err:
+        print(f"Network exception occurred : {err}")
