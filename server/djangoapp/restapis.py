@@ -1,4 +1,5 @@
 # Uncomment the imports below before you add the function code
+from django.http import JsonResponse
 import requests
 import os
 from dotenv import load_dotenv
@@ -6,16 +7,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
-sentiment_analyzer_url = os.getenv(
+    'backend_url',
+     default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
+    sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
-    default="https://sentianalyzer.24c21jy4pklt.us-south.codeengine.appdomain.cloud")
+    default=
+    "https://sentianalyzer.24c21jy4pklt.us-south.codeengine.appdomain.cloud")
+
 
 def get_request(endpoint, **kwargs):
     params = ""
-    if(kwargs):
-        for key,value in kwargs.items():
-            params=params+key+"="+value+"&"
+    if (kwargs):
+        for key, value in kwargs.items():
+            params = params+key+"="+value+"&"
 
     request_url = backend_url+endpoint+"?"+params
 
@@ -24,41 +28,47 @@ def get_request(endpoint, **kwargs):
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except:
+    except Exception as e:
         # If any error occurs
-        print("Network exception occurred")
+        print(f"Network exception occurred: {e}")
 
 
-#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default,
+# particular state if state is passed
+
+
 def get_dealerships(request, state="All"):
-    if(state == "All"):
+    if (state == "All"):
         endpoint = "/fetchDealers"
     else:
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
-
+    return JsonResponse({"status": 200, "dealers": dealerships})
 
 
 def post_review(data_dict):
     request_url = backend_url+"/insert_review"
     try:
-        response = requests.post(request_url,json=data_dict)
+        response = requests.post(request_url, json=data_dict)
         print(response.json())
         return response.json()
-    except:
-        print("Network exception occurred")
+    except Exception as e:
+        print(f"Network exception occurred: {e}")
+
 
 def add_review(request):
-    if(request.user.is_anonymous == False):
+    if (request.user.is_anonymous is False):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status":200})
+            return JsonResponse({"status": 200})
         except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            return JsonResponse({"status": 401,
+             "message": "Error in posting review"})
     else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return JsonResponse({"status": 403,
+         "message": "Unauthorized"})
+
 
 def analyze_review_sentiments(text):
     try:
