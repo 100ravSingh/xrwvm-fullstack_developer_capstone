@@ -30,10 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
         'localhost',
-        'https://laughing-rotary-phone-j7rvxwvqgp92q776-8000.app.github.dev'
+        'https://souravfsingh-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
                 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://laughing-rotary-phone-j7rvxwvqgp92q776-8000.app.github.dev'
+    'https://souravfsingh-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
     ]
 
 REST_FRAMEWORK = {
