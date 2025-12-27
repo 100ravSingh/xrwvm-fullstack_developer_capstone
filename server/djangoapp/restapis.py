@@ -9,7 +9,7 @@ load_dotenv()
 
 backend_url = os.getenv(
     'backend_url',
-    default="https://humble-disco-4vq5x95w4q6hqrw7-3030.app.github.dev")
+    default="https://souravfsingh-3030.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai")
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
     default=(
